@@ -134,7 +134,7 @@ function App(props: AppProps) {
 
     return {
       width: largestBoundarySize * ratio - 48,
-      height: largestBoundarySize - 48,
+      height: largestBoundarySize - 120,
     };
   };
 
@@ -173,7 +173,6 @@ function App(props: AppProps) {
         />
         <div className="navigation">
           <CancelButton onClick={() => setModalOpen(false)} />
-
           <ConfirmButton onClick={onConfirm} disabled={isValidating} />
         </div>
       </div>

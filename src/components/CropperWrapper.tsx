@@ -1,10 +1,15 @@
 import React, { FC } from "react";
 import { CropperFade, CropperRef } from "react-advanced-cropper";
+import {
+  getAbsoluteZoom,
+  getZoomFactor,
+} from "advanced-cropper/extensions/absolute-zoom";
 import { Spinner } from "./Spinner";
 
 import classNames from "classnames";
 
 import classes from "./CropperWrapper.module.css";
+import { Navigation } from "./Navigation";
 
 export interface CropperWrapperProps {
   cropper?: CropperRef;
@@ -22,7 +27,15 @@ export const CropperWrapper: FC<CropperWrapperProps> = ({
   className,
   validating,
 }) => {
-  const state = cropper?.getState();
+  const state = cropper!.getState();
+  const settings = cropper!.getSettings();
+  const absoluteZoom = getAbsoluteZoom(state, settings);
+
+  const onZoom = (value: number, transitions?: boolean) => {
+    cropper!.zoomImage(getZoomFactor(state, settings, value), {
+      transitions: !!transitions,
+    });
+  };
 
   const shouldSpin = validating || loading;
 
@@ -33,6 +46,11 @@ export const CropperWrapper: FC<CropperWrapperProps> = ({
         className={"advanced-cropper-wrapper__fade"}
       >
         {children}
+        <Navigation
+          className={classes.navigation}
+          zoomAmount={absoluteZoom * 100}
+          onZoomChange={(zoomAmount) => onZoom(zoomAmount / 100, false)}
+        />
       </CropperFade>
       <Spinner
         className={classNames(classes.spinner, {
