@@ -1,0 +1,29 @@
+.spinner {
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+  transition-delay: 0s;
+  stroke: currentColor;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner--visible {
+  transition-delay: 0.5s;
+  opacity: 1;
+  visibility: visible;
+}
+
+.navigation {
+  display: flex;
+  bottom: 0;
+  left: 50%;
+  max-width: 450px;
+  position: absolute;
+  padding: 20px 15px;
+  transform: translateX(-50%);
+  width: 100%;
+  align-items: center;
+}
