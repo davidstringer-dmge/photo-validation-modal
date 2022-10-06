@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/lato": "^4.5.10",
     "classnames": "^2.3.2",
     "react": "^17.0.0",
     "react-advanced-cropper": "~0.13.0",

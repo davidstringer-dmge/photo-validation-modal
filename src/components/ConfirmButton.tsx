@@ -5,12 +5,13 @@ import checkUrl from "../assets/check.svg";
 
 interface Props {
   className?: string;
+  disabled?: boolean;
   onClick?: MouseEventHandler;
 }
 
-export const ConfirmButton: FC<Props> = ({ className, onClick }) => {
+export const ConfirmButton: FC<Props> = ({ className, onClick, disabled }) => {
   return (
-    <button onClick={onClick} className={classes.container}>
+    <button onClick={onClick} disabled={disabled} className={classes.container}>
       <img src={checkUrl} />
     </button>
   );

@@ -11,9 +11,12 @@ import Modal, { Styles } from "react-modal";
 
 import { CropperWrapper } from "./components/CropperWrapper";
 
+import "@fontsource/lato";
 import "react-advanced-cropper/dist/style.css";
 import "./App.css";
 import { ConfirmButton } from "./components/ConfirmButton";
+import { CancelButton } from "./components/CancelButton";
+import { Banner } from "./components/Banner";
 
 type AppProps = {
   fieldId: string;
@@ -26,10 +29,12 @@ const resetFileInput = (inputField: HTMLInputElement): void => {
 
 const customStyles: Styles = {
   overlay: {
+    fontFamily: '"Lato", Arial, sans-serif',
     zIndex: 1000,
     backgroundColor: "rgba(22, 21, 21, 0.95)",
   },
   content: {
+    width: "90%",
     padding: "0",
     top: "50%",
     left: "50%",
@@ -141,6 +146,7 @@ function App(props: AppProps) {
       ariaHideApp={false}
       style={customStyles}
     >
+      <Banner className="modal-banner" />
       <div className="cropper-wrapper">
         <FixedCropper
           wrapperComponent={CropperWrapper}
@@ -166,7 +172,9 @@ function App(props: AppProps) {
           imageRestriction={ImageRestriction.stencil}
         />
         <div className="navigation">
-          <ConfirmButton onClick={onConfirm}></ConfirmButton>
+          <CancelButton onClick={() => setModalOpen(false)} />
+
+          <ConfirmButton onClick={onConfirm} disabled={isValidating} />
         </div>
       </div>
     </Modal>

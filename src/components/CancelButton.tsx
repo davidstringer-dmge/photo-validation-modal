@@ -1,16 +1,17 @@
-import React, { FC } from "react";
-import classes from "./ConfirmButton.module.css";
+import React, { FC, MouseEventHandler } from "react";
+import classes from "./CancelButton.module.css";
 
-import checkUrl from "../assets/check.svg";
+import cancelUrl from "../assets/cancel.svg";
 
 interface Props {
   className?: string;
+  onClick?: MouseEventHandler;
 }
 
-export const CancelButton: FC<Props> = ({ className }) => {
+export const CancelButton: FC<Props> = ({ className, onClick }) => {
   return (
-    <button className={classes.container}>
-      <img src={checkUrl} />
+    <button className={classes.container} onClick={onClick}>
+      <img src={cancelUrl} />
     </button>
   );
 };

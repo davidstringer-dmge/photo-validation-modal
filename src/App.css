@@ -1,6 +1,6 @@
 .cropperTest {
-  width: 500px;
-  height: 500px;
+  height: 400px;
+  width: 100%;
 }
 
 .cropper-wrapper {
@@ -8,6 +8,10 @@
   margin: 0;
   box-shadow: 0 0 18px 0 rgb(2 3 3 / 48%);
   border-radius: 10px;
+}
+
+.modal-banner {
+  margin-bottom: 15px;
 }
 
 .navigation {
