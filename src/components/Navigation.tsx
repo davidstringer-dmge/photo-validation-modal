@@ -35,7 +35,7 @@ export const Navigation = (props: NavigationProps) => {
         }
         className={classes.slider}
         type="range"
-        min="1"
+        min="0"
         max="100"
         value={props.zoomAmount}
       />
