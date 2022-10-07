@@ -7,6 +7,7 @@ import {
 import { Spinner } from "./Spinner";
 
 import classNames from "classnames";
+import helpUrl from "../assets/help.svg";
 
 import classes from "./CropperWrapper.module.css";
 import { Navigation } from "./Navigation";
@@ -46,6 +47,12 @@ export const CropperWrapper: FC<CropperWrapperProps> = ({
         className={"advanced-cropper-wrapper__fade"}
       >
         {children}
+        <button
+          className={classes.helpButton}
+          onClick={() => console.log("adwdadad")}
+        >
+          <img src={helpUrl} />
+        </button>
         <Navigation
           className={classes.navigation}
           zoomAmount={absoluteZoom * 100}
