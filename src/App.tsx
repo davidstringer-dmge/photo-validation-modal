@@ -168,7 +168,7 @@ function App(props: AppProps) {
               className={"cropperTest"}
               stencilSize={stencilSize}
               stencilProps={{
-                ratio: 30 / 45,
+                ratio,
                 handlers: false,
                 lines: false,
                 movable: false,
