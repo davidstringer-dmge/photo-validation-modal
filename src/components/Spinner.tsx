@@ -1,10 +1,8 @@
-import React, { FC } from "react";
-
-interface Props {
+interface SpinnerProps {
   className?: string;
 }
 
-export const Spinner: FC<Props> = ({ className }) => {
+export const Spinner = ({ className }: SpinnerProps) => {
   return (
     <svg
       className={className}
