@@ -14,13 +14,16 @@ import { IconButton } from "./IconButton";
 import s from "./CropperWrapper.module.css";
 
 export interface CropperWrapperProps {
+  // supplied by advanced-cropper
   cropper?: CropperRef;
   loading: boolean;
   loaded: boolean;
   validating?: boolean;
   className?: string;
-  onHelp?: () => void;
   children?: JSX.Element;
+
+  // custom
+  onHelp?: () => void;
 }
 
 export const CropperWrapper = ({
@@ -48,7 +51,7 @@ export const CropperWrapper = ({
     <div className={classNames(className)}>
       <CropperFade
         visible={state && loaded}
-        className={"advanced-cropper-wrapper__fade"}
+        className="advanced-cropper-wrapper__fade"
       >
         {children}
         <IconButton
