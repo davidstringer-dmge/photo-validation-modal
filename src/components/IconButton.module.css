@@ -1,15 +1,22 @@
 .iconButton {
   display: flex;
+  cursor: pointer;
   padding: 0;
+  opacity: 0.4;
   align-items: center;
   justify-content: center;
   border: none;
   outline: none;
+  color: inherit;
   background: none;
-  transition: transform 0.5s;
+  transition: 0.5s;
 }
 
 .iconButton:hover,
 .iconButton:focus {
+  opacity: 1;
+}
+
+.zoomOnHover:hover {
   transform: scale(1.1);
 }

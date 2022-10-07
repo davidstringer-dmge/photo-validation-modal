@@ -7,9 +7,11 @@ interface IconButtonProps {
   iconUrl: string;
   onClick?: MouseEventHandler;
   className?: string;
+  zoomOnHover?: boolean;
 }
 
 export const IconButton = ({
+  zoomOnHover,
   className,
   onClick,
   iconUrl,
@@ -17,7 +19,9 @@ export const IconButton = ({
   <button
     type="button"
     onClick={onClick}
-    className={classNames(className, s.iconButton)}
+    className={classNames(className, s.iconButton, {
+      [s.zoomOnHover]: zoomOnHover,
+    })}
   >
     <img src={iconUrl} />
   </button>
