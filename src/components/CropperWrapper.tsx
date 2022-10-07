@@ -1,16 +1,17 @@
-import React, { FC } from "react";
 import { CropperFade, CropperRef } from "react-advanced-cropper";
 import {
   getAbsoluteZoom,
   getZoomFactor,
 } from "advanced-cropper/extensions/absolute-zoom";
-import { Spinner } from "./Spinner";
-
 import classNames from "classnames";
+
 import helpUrl from "../assets/help.svg";
 
-import classes from "./CropperWrapper.module.css";
+import { Spinner } from "./Spinner";
 import { Navigation } from "./Navigation";
+import { IconButton } from "./IconButton";
+
+import s from "./CropperWrapper.module.css";
 
 export interface CropperWrapperProps {
   cropper?: CropperRef;
@@ -19,9 +20,10 @@ export interface CropperWrapperProps {
   validating?: boolean;
   className?: string;
   onHelp?: () => void;
+  children?: JSX.Element;
 }
 
-export const CropperWrapper: FC<CropperWrapperProps> = ({
+export const CropperWrapper = ({
   cropper,
   loaded,
   loading,
@@ -29,7 +31,7 @@ export const CropperWrapper: FC<CropperWrapperProps> = ({
   className,
   validating,
   onHelp,
-}) => {
+}: CropperWrapperProps) => {
   const state = cropper!.getState();
   const settings = cropper!.getSettings();
   const absoluteZoom = getAbsoluteZoom(state, settings);
@@ -49,18 +51,20 @@ export const CropperWrapper: FC<CropperWrapperProps> = ({
         className={"advanced-cropper-wrapper__fade"}
       >
         {children}
-        <button className={classes.helpButton} onClick={onHelp}>
-          <img src={helpUrl} />
-        </button>
+        <IconButton
+          iconUrl={helpUrl}
+          onClick={onHelp}
+          className={s.helpButton}
+        />
         <Navigation
-          className={classes.navigation}
+          className={s.navigation}
           zoomAmount={absoluteZoom * 100}
           onZoomChange={(zoomAmount) => onZoom(zoomAmount / 100, false)}
         />
       </CropperFade>
       <Spinner
-        className={classNames(classes.spinner, {
-          [classes["spinner--visible"]]: shouldSpin,
+        className={classNames(s.spinner, {
+          [s["spinner--visible"]]: shouldSpin,
         })}
       />
     </div>
