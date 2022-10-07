@@ -12,7 +12,8 @@ export const Banner = (props: BannerProps) => {
   return (
     <div className={classNames(props.className, classes.container)}>
       <img className={classes.icon} src={infoUrl} /> Please adjust your photo to
-      match the requirements closely.
+      match the requirements closely. Press the help button below for
+      guidelines.
     </div>
   );
 };

@@ -17,6 +17,7 @@ import "./App.css";
 import { ConfirmButton } from "./components/ConfirmButton";
 import { CancelButton } from "./components/CancelButton";
 import { Banner } from "./components/Banner";
+import { HelpSection } from "./components/HelpSection";
 
 type AppProps = {
   fieldId: string;
@@ -50,6 +51,7 @@ const customStyles: Styles = {
 function App(props: AppProps) {
   const fileUrl = useRef<string>();
   const cropperRef = useRef<CropperRef | null>(null);
+  const [isHelpOpen, setHelpOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isValidating, setValidating] = useState(false);
 
@@ -74,11 +76,11 @@ function App(props: AppProps) {
     field?.addEventListener("change", onChange);
 
     return () => {
-      console.log("unmounted");
-      field?.removeEventListener("change", onChange);
-      if (fileUrl.current) {
-        URL.revokeObjectURL(fileUrl.current);
-      }
+      // console.log("unmounted");
+      // field?.removeEventListener("change", onChange);
+      // if (fileUrl.current) {
+      //   URL.revokeObjectURL(fileUrl.current);
+      // }
     };
   }, [props.fieldId]);
 
@@ -148,33 +150,40 @@ function App(props: AppProps) {
     >
       <Banner className="modal-banner" />
       <div className="cropper-wrapper">
-        <FixedCropper
-          wrapperComponent={CropperWrapper}
-          wrapperProps={{
-            validating: isValidating,
-          }}
-          defaultSize={defaultSize}
-          onReady={(ref) => {
-            cropperRef.current = ref;
-          }}
-          src={fileUrl.current}
-          minWidth={100}
-          minHeight={150}
-          className={"cropperTest"}
-          stencilSize={stencilSize}
-          stencilProps={{
-            ratio: 30 / 45,
-            handlers: false,
-            lines: false,
-            movable: false,
-            resizable: false,
-          }}
-          imageRestriction={ImageRestriction.stencil}
-        />
-        <div className="navigation">
-          <CancelButton onClick={() => setModalOpen(false)} />
-          <ConfirmButton onClick={onConfirm} disabled={isValidating} />
-        </div>
+        {!isHelpOpen ? (
+          <>
+            <FixedCropper
+              wrapperComponent={CropperWrapper}
+              wrapperProps={{
+                validating: isValidating,
+                onHelp: () => setHelpOpen(true),
+              }}
+              defaultSize={defaultSize}
+              onReady={(ref) => {
+                cropperRef.current = ref;
+              }}
+              src={fileUrl.current}
+              minWidth={100}
+              minHeight={150}
+              className={"cropperTest"}
+              stencilSize={stencilSize}
+              stencilProps={{
+                ratio: 30 / 45,
+                handlers: false,
+                lines: false,
+                movable: false,
+                resizable: false,
+              }}
+              imageRestriction={ImageRestriction.stencil}
+            />
+            <div className="navigation">
+              <CancelButton onClick={() => setModalOpen(false)} />
+              <ConfirmButton onClick={onConfirm} disabled={isValidating} />
+            </div>
+          </>
+        ) : (
+          <HelpSection onClose={() => setHelpOpen(false)} />
+        )}
       </div>
     </Modal>
   );

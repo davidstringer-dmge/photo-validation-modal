@@ -1,0 +1,37 @@
+.container {
+  color: white;
+  padding: 20px;
+  height: 663px;
+  overflow-y: scroll;
+  background-color: black;
+  box-sizing: border-box;
+}
+
+.closeButton {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+
+  will-change: transform;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  outline: none;
+  transition: transform 0.5s;
+  padding: 0;
+}
+
+.closeButton:hover {
+  transform: scale(1.1);
+}
+
+.closeButton:focus {
+  transform: scale(1.1);
+}
+
+.imageExample {
+  margin-left: 20px;
+}

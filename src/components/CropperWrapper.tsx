@@ -18,6 +18,7 @@ export interface CropperWrapperProps {
   loaded: boolean;
   validating?: boolean;
   className?: string;
+  onHelp?: () => void;
 }
 
 export const CropperWrapper: FC<CropperWrapperProps> = ({
@@ -27,6 +28,7 @@ export const CropperWrapper: FC<CropperWrapperProps> = ({
   children,
   className,
   validating,
+  onHelp,
 }) => {
   const state = cropper!.getState();
   const settings = cropper!.getSettings();
@@ -47,10 +49,7 @@ export const CropperWrapper: FC<CropperWrapperProps> = ({
         className={"advanced-cropper-wrapper__fade"}
       >
         {children}
-        <button
-          className={classes.helpButton}
-          onClick={() => console.log("adwdadad")}
-        >
+        <button className={classes.helpButton} onClick={onHelp}>
           <img src={helpUrl} />
         </button>
         <Navigation
