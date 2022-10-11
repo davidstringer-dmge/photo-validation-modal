@@ -30,7 +30,7 @@ export const Navigation = ({
   };
 
   return (
-    <div className={classNames(className, s.container)}>
+    <div className={classNames(className, s.navigation)}>
       <IconButton
         className={s.zoomButton}
         iconUrl={zoomOutUrl}
