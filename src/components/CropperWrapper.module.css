@@ -1,4 +1,4 @@
-.spinner {
+.Spinner {
   visibility: hidden;
   opacity: 0;
   transition: 0.5s;
@@ -10,12 +10,7 @@
   transform: translate(-50%, -50%);
 }
 
-.spinner--visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-.navigation {
+.Navigation {
   width: 400px;
   position: absolute;
   bottom: 0;
@@ -24,8 +19,13 @@
   margin: 0 auto;
 }
 
-.helpButton {
+.HelpButton {
   position: absolute;
   top: 10px;
   left: 12px;
+}
+
+.showSpinner {
+  opacity: 1;
+  visibility: visible;
 }

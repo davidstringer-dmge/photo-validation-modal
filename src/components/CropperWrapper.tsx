@@ -1,7 +1,8 @@
+import { useCallback } from "react";
 import { CropperFade, CropperRef } from "react-advanced-cropper";
 import {
-  getAbsoluteZoom,
   getZoomFactor,
+  getAbsoluteZoom,
 } from "advanced-cropper/extensions/absolute-zoom";
 import classNames from "classnames";
 
@@ -45,7 +46,7 @@ export const CropperWrapper = ({
     });
   };
 
-  const shouldSpin = validating || loading;
+  const showSpinner = validating || loading;
 
   return (
     <div className={classNames(className)}>
@@ -57,17 +58,17 @@ export const CropperWrapper = ({
         <IconButton
           iconUrl={helpUrl}
           onClick={onHelp}
-          className={s.helpButton}
+          className={s.HelpButton}
         />
         <Navigation
-          className={s.navigation}
-          zoomAmount={absoluteZoom * 100}
-          onZoomChange={(zoomAmount) => onZoom(zoomAmount / 100, false)}
+          className={s.Navigation}
+          zoomValue={absoluteZoom}
+          onZoom={onZoom}
         />
       </CropperFade>
       <Spinner
         className={classNames(s.spinner, {
-          [s["spinner--visible"]]: shouldSpin,
+          [s.showSpinner]: showSpinner,
         })}
       />
     </div>

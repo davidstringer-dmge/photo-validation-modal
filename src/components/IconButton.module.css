@@ -1,4 +1,4 @@
-.iconButton {
+.IconButton {
   display: flex;
   cursor: pointer;
   padding: 0;
@@ -12,8 +12,8 @@
   transition: 0.5s;
 }
 
-.iconButton:hover,
-.iconButton:focus {
+.IconButton:hover,
+.IconButton:focus {
   opacity: 1;
 }
 

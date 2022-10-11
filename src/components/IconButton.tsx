@@ -19,7 +19,7 @@ export const IconButton = ({
   <button
     type="button"
     onClick={onClick}
-    className={classNames(className, s.iconButton, {
+    className={classNames(className, s.IconButton, {
       [s.zoomOnHover]: zoomOnHover,
     })}
   >

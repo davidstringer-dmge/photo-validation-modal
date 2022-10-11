@@ -3,45 +3,58 @@ import classNames from "classnames";
 import zoomInUrl from "../assets/zoomIn.svg";
 import zoomOutUrl from "../assets/zoomOut.svg";
 
-import classes from "./Navigation.module.css";
+import { IconButton } from "./IconButton";
+import s from "./Navigation.module.css";
+
+// note: `zoomValue` is between 0 and 1
 
 type NavigationProps = {
+  zoomValue: number;
   className?: string;
-  onZoomChange?: (amount: number, transitions?: boolean) => void;
-  zoomAmount: number;
+  onZoom?: (zoomValue: number, transition?: boolean) => void;
 };
 
-export const Navigation = (props: NavigationProps) => {
+export const Navigation = ({
+  zoomValue,
+  className,
+  onZoom,
+}: NavigationProps) => {
   const onZoomIn = () => {
-    const convertZoom = props.zoomAmount / 100;
-    const zoomAmount = Math.min(1, convertZoom + 0.25);
-    props.onZoomChange?.(zoomAmount * 100, true);
+    const zoomAmount = Math.min(1, zoomValue + 0.25);
+    onZoom?.(zoomAmount, true);
   };
 
   const onZoomOut = () => {
-    const convertZoom = props.zoomAmount / 100;
-    const zoomAmount = Math.max(0, convertZoom - 0.25);
-    props.onZoomChange?.(zoomAmount * 100, true);
+    const zoomAmount = Math.max(0, zoomValue - 0.25);
+    onZoom?.(zoomAmount, true);
   };
 
   return (
-    <div className={classNames(props.className, classes.container)}>
-      <button className={classes.button} onClick={onZoomOut}>
-        <img src={zoomOutUrl} />
-      </button>
+    <div className={classNames(className, s.container)}>
+      <IconButton
+        className={s.zoomButton}
+        iconUrl={zoomOutUrl}
+        onClick={onZoom && onZoomOut}
+        zoomOnHover={true}
+      />
       <input
-        onInput={(event) =>
-          props.onZoomChange?.(Number(event.currentTarget.value))
-        }
-        className={classes.slider}
+        className={s.slider}
         type="range"
         min="0"
         max="100"
-        value={props.zoomAmount}
+        value={zoomValue * 100}
+        onInput={(event) => {
+          const zoomValue = Number(event.currentTarget.value);
+          console.log(zoomValue);
+          onZoom?.(zoomValue / 100);
+        }}
       />
-      <button className={classes.button} onClick={onZoomIn}>
-        <img src={zoomInUrl} />
-      </button>
+      <IconButton
+        className={s.zoomButton}
+        iconUrl={zoomInUrl}
+        onClick={onZoom && onZoomIn}
+        zoomOnHover={true}
+      />
     </div>
   );
 };
