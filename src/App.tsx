@@ -58,7 +58,7 @@ const stencilSize: StencilSize = ({ boundary }) => {
   };
 };
 
-const cleanupFile = (fileUrlRef: MutableRefObject<string | undefined>) => {
+const cleanupFileUrl = (fileUrlRef: MutableRefObject<string | undefined>) => {
   if (fileUrlRef.current) {
     URL.revokeObjectURL(fileUrlRef.current);
   }
@@ -91,8 +91,6 @@ const App = (props: AppProps) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isValidating, setValidating] = useState(false);
 
-  const pickedUpFile = useRef<File | null>(null);
-
   useEffect(() => {
     const field = document.getElementById(props.fieldId) as HTMLInputElement;
 
@@ -102,9 +100,7 @@ const App = (props: AppProps) => {
       const file = inputField.files?.item(0);
       if (file) {
         event.preventDefault();
-        pickedUpFile.current = file;
         fileUrl.current = URL.createObjectURL(file);
-        resetFileInput(inputField);
         setModalOpen(true);
       }
     };
@@ -113,7 +109,7 @@ const App = (props: AppProps) => {
   }, [props.fieldId]);
 
   const onConfirm = useCallback(async () => {
-    if (!cropperRef.current || !pickedUpFile.current) {
+    if (!cropperRef.current) {
       return;
     }
 
@@ -136,34 +132,34 @@ const App = (props: AppProps) => {
       return;
     }
 
-    // create a new file and add it to the field
+    // replace the existing file with a new one that has the cropped content in it
     const field = document.getElementById(props.fieldId) as HTMLInputElement;
-    const newFile = new File([blob], pickedUpFile.current.name, {
-      type: pickedUpFile.current.type,
+    const oldFile = field.files?.item(0);
+    const newFile = new File([blob], oldFile!.name, {
+      type: oldFile!.type,
     });
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(newFile);
     field.files = dataTransfer.files;
 
-    cleanupFile(fileUrl);
+    alert("This image is a valid photo.");
+    cleanupFileUrl(fileUrl);
     setModalOpen(false);
-  }, [
-    props.fieldId,
-    fileUrl.current,
-    cropperRef.current,
-    pickedUpFile.current,
-  ]);
+  }, [props.fieldId, fileUrl.current, cropperRef.current]);
 
-  const onModalClose = () => {
-    cleanupFile(fileUrl);
+  const onModalCancel = () => {
+    const field = document.getElementById(props.fieldId) as HTMLInputElement;
+
+    cleanupFileUrl(fileUrl);
     setModalOpen(false);
+    resetFileInput(field);
   };
 
   return (
     <Modal
       isOpen={isModalOpen}
       contentLabel="Photo Validation Modal"
-      onRequestClose={onModalClose}
+      onRequestClose={onModalCancel}
       ariaHideApp={false}
       style={customStyles}
     >
@@ -199,7 +195,7 @@ const App = (props: AppProps) => {
               <IconButton
                 zoomOnHover={true}
                 iconUrl={cancelUrl}
-                onClick={onModalClose}
+                onClick={onModalCancel}
               />
               <IconButton
                 zoomOnHover={true}

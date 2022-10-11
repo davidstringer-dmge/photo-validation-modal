@@ -45,7 +45,6 @@ export const Navigation = ({
         value={zoomValue * 100}
         onInput={(event) => {
           const zoomValue = Number(event.currentTarget.value);
-          console.log(zoomValue);
           onZoom?.(zoomValue / 100);
         }}
       />
