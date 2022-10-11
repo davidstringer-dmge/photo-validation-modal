@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+import "react-advanced-cropper/dist/style.css";
 import App from "./App";
 import "./index.css";
 

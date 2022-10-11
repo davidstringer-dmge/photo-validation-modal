@@ -5,19 +5,22 @@ import {
   ImageRestriction,
   DefaultSize,
   StencilSize,
-  CropperWrapperComponent,
 } from "react-advanced-cropper";
 import Modal, { Styles } from "react-modal";
 
+// resources
+import "react-advanced-cropper/dist/style.css";
+import "@fontsource/lato";
+
+import cancelUrl from "./assets/cancel.svg";
+import checkUrl from "./assets/check.svg";
+
+import { Banner } from "./components/Banner";
+import { IconButton } from "./components/IconButton";
+import { HelpSection } from "./components/HelpSection";
 import { CropperWrapper } from "./components/CropperWrapper";
 
-import "@fontsource/lato";
-import "react-advanced-cropper/dist/style.css";
 import "./App.css";
-import { ConfirmButton } from "./components/ConfirmButton";
-import { CancelButton } from "./components/CancelButton";
-import { Banner } from "./components/Banner";
-import { HelpSection } from "./components/HelpSection";
 
 type AppProps = {
   fieldId: string;
@@ -177,8 +180,16 @@ function App(props: AppProps) {
               imageRestriction={ImageRestriction.stencil}
             />
             <div className="navigation">
-              <CancelButton onClick={() => setModalOpen(false)} />
-              <ConfirmButton onClick={onConfirm} disabled={isValidating} />
+              <IconButton
+                zoomOnHover={true}
+                iconUrl={cancelUrl}
+                onClick={() => setModalOpen(false)}
+              />
+              <IconButton
+                zoomOnHover={true}
+                iconUrl={checkUrl}
+                onClick={onConfirm}
+              />
             </div>
           </>
         ) : (

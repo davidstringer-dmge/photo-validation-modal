@@ -12,6 +12,7 @@ import { Navigation } from "./Navigation";
 import { IconButton } from "./IconButton";
 
 import s from "./CropperWrapper.module.css";
+import { ReactNode } from "react";
 
 export interface CropperWrapperProps {
   // supplied by advanced-cropper
@@ -20,7 +21,7 @@ export interface CropperWrapperProps {
   loaded: boolean;
   validating?: boolean;
   className?: string;
-  children?: JSX.Element;
+  children?: ReactNode;
 
   // custom
   onHelp?: () => void;

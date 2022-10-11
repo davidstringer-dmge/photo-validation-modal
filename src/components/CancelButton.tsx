@@ -1,17 +1,23 @@
-import React, { FC, MouseEventHandler } from "react";
-import classes from "./CancelButton.module.css";
+import { MouseEventHandler } from "react";
+import classNames from "classnames";
 
 import cancelUrl from "../assets/cancel.svg";
 
-interface Props {
+import s from "./CancelButton.module.css";
+import { IconButton } from "./IconButton";
+
+interface CancelButtonProps {
   className?: string;
   onClick?: MouseEventHandler;
 }
 
-export const CancelButton: FC<Props> = ({ className, onClick }) => {
+export const CancelButton = ({ className, onClick }: CancelButtonProps) => {
   return (
-    <button className={classes.container} onClick={onClick}>
-      <img src={cancelUrl} />
-    </button>
+    <IconButton
+      className={classNames(className, s.container)}
+      zoomOnHover={true}
+      iconUrl={cancelUrl}
+      onClick={onClick}
+    />
   );
 };
