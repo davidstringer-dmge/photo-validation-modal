@@ -5,16 +5,16 @@
   border-radius: 10px;
 }
 
+.banner {
+  margin-bottom: 15px;
+}
+
 .cropper {
   height: 600px;
   width: 100%;
 }
 
-.modalBanner {
-  margin-bottom: 15px;
-}
-
-.navigation {
+.submissions {
   display: flex;
   justify-content: space-around;
   align-items: center;

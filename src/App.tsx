@@ -166,7 +166,7 @@ const App = (props: AppProps) => {
       ariaHideApp={false}
       style={customStyles}
     >
-      <Banner className={s.modalBanner} />
+      <Banner className={s.banner} />
       <div className={s.cropperWrapper}>
         {!isHelpOpen ? (
           <>
@@ -194,7 +194,7 @@ const App = (props: AppProps) => {
               }}
               imageRestriction={ImageRestriction.stencil}
             />
-            <div className={s.navigation}>
+            <div className={s.submissions}>
               <IconButton
                 zoomOnHover={true}
                 iconUrl={cancelUrl}
