@@ -16,7 +16,7 @@ export const Banner = (props: BannerProps) => {
   return (
     <div className={classNames(props.className, classes.container)}>
       <img className={classes.icon} src={infoUrl} />
-      <p>{props.message}</p>
+      <strong>{props.message}</strong>
     </div>
   );
 };
