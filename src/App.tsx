@@ -20,7 +20,7 @@ import { IconButton } from "./components/IconButton";
 import { HelpSection } from "./components/HelpSection";
 import { CropperWrapper } from "./components/CropperWrapper";
 
-import "./App.css";
+import s from "./App.module.css";
 
 type AppProps = {
   fieldId: string;
@@ -151,12 +151,12 @@ function App(props: AppProps) {
       ariaHideApp={false}
       style={customStyles}
     >
-      <Banner className="modal-banner" />
-      <div className="cropper-wrapper">
+      <Banner className={s.modalBanner} />
+      <div className={s.cropperWrapper}>
         {!isHelpOpen ? (
           <>
             <FixedCropper
-              className="cropper"
+              className={s.cropper}
               src={fileUrl.current}
               wrapperComponent={CropperWrapper}
               wrapperProps={{
@@ -179,7 +179,7 @@ function App(props: AppProps) {
               }}
               imageRestriction={ImageRestriction.stencil}
             />
-            <div className="navigation">
+            <div className={s.navigation}>
               <IconButton
                 zoomOnHover={true}
                 iconUrl={cancelUrl}
