@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { MouseEventHandler } from "react";
 
 import closeUrl from "../assets/cancel.svg";
@@ -11,7 +12,7 @@ type HelpSectionProps = {
 
 export const HelpSection = (props: HelpSectionProps) => {
   return (
-    <div className={s.container}>
+    <div className={classNames(s.container, s.scrollGradient)}>
       <div className={s.guidelines}>
         <button className={s.closeButton} onClick={props.onClose}>
           <img src={closeUrl} />
