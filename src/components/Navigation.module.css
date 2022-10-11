@@ -1,4 +1,5 @@
 .navigation {
+  box-sizing: border-box;
   padding: 20px;
   display: flex;
 }

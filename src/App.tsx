@@ -64,7 +64,7 @@ const cleanupFileUrl = (fileUrlRef: MutableRefObject<string | undefined>) => {
   }
 };
 
-const customStyles: Styles = {
+const modalCustomStyles: Styles = {
   overlay: {
     fontFamily: '"Lato", Arial, sans-serif',
     zIndex: 1000,
@@ -160,7 +160,7 @@ const App = (props: AppProps) => {
       contentLabel="Photo Validation Modal"
       onRequestClose={onModalCancel}
       ariaHideApp={false}
-      style={customStyles}
+      style={modalCustomStyles}
     >
       <Banner className={s.banner} />
       <div className={s.cropperWrapper}>
