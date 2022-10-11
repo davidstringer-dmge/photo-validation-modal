@@ -71,7 +71,7 @@ const customStyles: Styles = {
   },
 };
 
-function App(props: AppProps) {
+const App = (props: AppProps) => {
   const fileUrl = useRef<string>();
   const cropperRef = useRef<CropperRef | null>(null);
   const [isHelpOpen, setHelpOpen] = useState(false);
@@ -198,6 +198,6 @@ function App(props: AppProps) {
       </div>
     </Modal>
   );
-}
+};
 
 export default App;
