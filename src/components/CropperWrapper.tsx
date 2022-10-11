@@ -58,17 +58,17 @@ export const CropperWrapper = ({
         <IconButton
           iconUrl={helpUrl}
           onClick={onHelp}
-          className={s.HelpButton}
+          className={s.helpButton}
         />
         <Navigation
-          className={s.Navigation}
+          className={s.navigation}
           zoomValue={absoluteZoom}
           onZoom={onZoom}
         />
       </CropperFade>
       <Spinner
         className={classNames(s.spinner, {
-          [s.showSpinner]: showSpinner,
+          [s["spinner--hide"]]: !showSpinner,
         })}
       />
     </div>

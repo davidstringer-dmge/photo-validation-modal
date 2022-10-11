@@ -1,6 +1,4 @@
-.Spinner {
-  visibility: hidden;
-  opacity: 0;
+.spinner {
   transition: 0.5s;
   transition-delay: 0s;
   stroke: currentColor;
@@ -10,7 +8,12 @@
   transform: translate(-50%, -50%);
 }
 
-.Navigation {
+.spinner--hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.navigation {
   width: 400px;
   position: absolute;
   bottom: 0;
@@ -19,13 +22,8 @@
   margin: 0 auto;
 }
 
-.HelpButton {
+.helpButton {
   position: absolute;
   top: 10px;
   left: 12px;
-}
-
-.showSpinner {
-  opacity: 1;
-  visibility: visible;
 }
