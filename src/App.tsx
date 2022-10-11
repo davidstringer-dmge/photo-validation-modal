@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   CropperRef,
   FixedCropper,
@@ -21,6 +21,7 @@ import { HelpSection } from "./components/HelpSection";
 import { CropperWrapper } from "./components/CropperWrapper";
 
 import s from "./App.module.css";
+import { rejects } from "assert";
 
 type AppProps = {
   fieldId: string;
@@ -105,43 +106,52 @@ function App(props: AppProps) {
     };
   }, [props.fieldId]);
 
-  const onConfirm = async () => {
-    if (cropperRef.current) {
-      setValidating(true);
-      cropperRef.current.getCanvas()?.toBlob(async (blob) => {
-        const response = await fetch(
-          "https://99c5jwwg1d.execute-api.eu-west-1.amazonaws.com/validate",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/octet-stream",
-            },
-            body: blob,
-          }
-        );
-
-        const result = await response.json();
-        if (!response.ok) {
-          alert(`${result.message}: ${result.errorCodes.join(", ")}`);
-        } else {
-          alert(`${result.message}`);
-          setModalOpen(false);
-
-          const field = document.getElementById(
-            props.fieldId
-          ) as HTMLInputElement;
-          const file = new File([blob as Blob], pickedUpFile.current!.name, {
-            type: pickedUpFile.current?.type,
-          });
-
-          const dataTransfer = new DataTransfer();
-          dataTransfer.items.add(file);
-          field.files = dataTransfer.files;
-        }
-        setValidating(false);
-      });
+  const onConfirm = useCallback(async () => {
+    if (!cropperRef.current || !pickedUpFile.current) {
+      return;
     }
-  };
+
+    setValidating(true);
+    const blob = await new Promise<Blob>((done, reject) => {
+      cropperRef.current?.getCanvas()?.toBlob((blob) => {
+        if (blob) {
+          done(blob);
+        } else {
+          reject(new Error("Could not save the cropped image"));
+        }
+      });
+    });
+
+    const response = await fetch(
+      "https://99c5jwwg1d.execute-api.eu-west-1.amazonaws.com/validate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/octet-stream",
+        },
+        body: blob,
+      }
+    );
+
+    const result = await response.json();
+    setValidating(false);
+
+    if (!response.ok) {
+      alert(`${result.message}: ${result.errorCodes.join(", ")}`);
+      return;
+    }
+
+    // create a new file and add it to the field
+    const field = document.getElementById(props.fieldId) as HTMLInputElement;
+    const newFile = new File([blob], pickedUpFile.current.name, {
+      type: pickedUpFile.current.type,
+    });
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(newFile);
+    field.files = dataTransfer.files;
+
+    setModalOpen(false);
+  }, [cropperRef.current, pickedUpFile.current, props.fieldId]);
 
   return (
     <Modal
