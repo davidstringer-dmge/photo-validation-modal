@@ -15,10 +15,6 @@ import {
 } from "react-advanced-cropper";
 import Modal, { Styles } from "react-modal";
 
-// resources
-import "react-advanced-cropper/dist/style.css";
-import "@fontsource/lato";
-
 import cancelUrl from "./assets/cancel.svg";
 import checkUrl from "./assets/check.svg";
 

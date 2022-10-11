@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+// import external CSS resources
+import "react-advanced-cropper/dist/style.css";
+import "@fontsource/lato";
+
 import App from "./App";
-import "./index.css";
 
 const baseId = "dmg-photo-validation";
 const reactRootId = `${baseId}-root`;
