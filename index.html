@@ -4,12 +4,6 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      id="dmg-photo-validation-lib"
-      src="/src/main.tsx"
-      type="module"
-      data-field-id="file-upload"
-    ></script>
     <title>Vite + React + TS</title>
   </head>
   <body>
@@ -17,5 +11,11 @@
       <input id="file-upload" type="file" />
       <button type="submit">submit</button>
     </form>
+    <script type="module">
+      import { validatePhotoFields } from "/src/main.tsx";
+      validatePhotoFields({
+        fieldIds: ["file-upload"],
+      });
+    </script>
   </body>
 </html>

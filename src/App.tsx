@@ -32,14 +32,18 @@ import { CropperWrapper } from "./components/CropperWrapper";
 import s from "./App.module.css";
 
 type AppProps = {
-  fieldId: string;
+  fieldIds: string[];
 };
 
 const stencilRatio = 30 / 45;
 
-const resetFileInput = (inputField: HTMLInputElement): void => {
-  inputField.value = "";
-  inputField.files = null;
+const resetFileInput = (
+  inputFieldRef: MutableRefObject<HTMLInputElement | undefined>
+): void => {
+  if (inputFieldRef.current) {
+    inputFieldRef.current.value = "";
+    inputFieldRef.current.files = null;
+  }
 };
 
 const defaultSize: DefaultSize = ({ imageSize, visibleArea }) => {
@@ -86,14 +90,13 @@ const customStyles: Styles = {
 
 const App = (props: AppProps) => {
   const fileUrl = useRef<string>();
+  const fieldRef = useRef<HTMLInputElement>();
   const cropperRef = useRef<CropperRef | null>(null);
   const [isHelpOpen, setHelpOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isValidating, setValidating] = useState(false);
 
   useEffect(() => {
-    const field = document.getElementById(props.fieldId) as HTMLInputElement;
-
     const onChange = (event: Event) => {
       const inputField = event.target as HTMLInputElement;
 
@@ -101,15 +104,19 @@ const App = (props: AppProps) => {
       if (file) {
         event.preventDefault();
         fileUrl.current = URL.createObjectURL(file);
+        fieldRef.current = event.currentTarget as HTMLInputElement;
         setModalOpen(true);
       }
     };
 
-    field?.addEventListener("change", onChange);
-  }, [props.fieldId]);
+    for (const fieldId of props.fieldIds) {
+      const field = document.getElementById(fieldId);
+      field?.addEventListener("change", onChange);
+    }
+  }, [props.fieldIds]);
 
   const onConfirm = useCallback(async () => {
-    if (!cropperRef.current) {
+    if (!cropperRef.current || !fieldRef.current) {
       return;
     }
 
@@ -134,24 +141,21 @@ const App = (props: AppProps) => {
 
     setModalOpen(false);
     // replace the existing file with a new one that has the cropped content in it
-    const field = document.getElementById(props.fieldId) as HTMLInputElement;
-    const oldFile = field.files?.item(0);
+    const oldFile = fieldRef.current.files?.item(0);
     const newFile = new File([blob], oldFile!.name, {
       type: oldFile!.type,
     });
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(newFile);
-    field.files = dataTransfer.files;
+    fieldRef.current.files = dataTransfer.files;
 
     cleanupFileUrl(fileUrl);
-  }, [props.fieldId, fileUrl.current, cropperRef.current]);
+  }, [fileUrl.current, fieldRef.current, cropperRef.current]);
 
   const onModalCancel = () => {
-    const field = document.getElementById(props.fieldId) as HTMLInputElement;
-
     cleanupFileUrl(fileUrl);
     setModalOpen(false);
-    resetFileInput(field);
+    resetFileInput(fieldRef);
   };
 
   return (

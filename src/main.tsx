@@ -5,23 +5,18 @@ import App from "./App";
 import "./index.css";
 
 const baseId = "dmg-photo-validation";
-const scriptId = `${baseId}-lib`;
 const reactRootId = `${baseId}-root`;
 
-try {
-  const fieldId = document
-    .getElementById(scriptId)
-    ?.getAttribute("data-field-id");
+interface ListenForValidationArgs {
+  fieldIds: string[];
+}
 
-  if (!fieldId) {
-    throw new Error(
-      "Could not find the 'data-field-id' attribute in the script tag."
-    );
-  }
-
-  const field = document.getElementById(fieldId);
-  if (field?.tagName !== "INPUT" || field.getAttribute("type") !== "file") {
-    throw new Error("Given field is not a file input type.");
+export const validatePhotoFields = ({ fieldIds }: ListenForValidationArgs) => {
+  for (const fieldId of fieldIds) {
+    const field = document.getElementById(fieldId);
+    if (field?.tagName !== "INPUT" || field.getAttribute("type") !== "file") {
+      throw new Error(`Given field id is not a file input type: ${fieldId}.`);
+    }
   }
 
   let rootElement = document.getElementById(reactRootId) as HTMLElement;
@@ -33,10 +28,8 @@ try {
 
   ReactDOM.render(
     <React.StrictMode>
-      <App fieldId={fieldId} />
+      <App fieldIds={fieldIds} />
     </React.StrictMode>,
     rootElement
   );
-} catch (error) {
-  console.error(error);
-}
+};
