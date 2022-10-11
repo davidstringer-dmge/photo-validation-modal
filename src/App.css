@@ -1,13 +1,13 @@
-.cropperTest {
-  height: 600px;
-  width: 100%;
-}
-
 .cropper-wrapper {
   padding: 0;
   margin: 0;
   box-shadow: 0 0 18px 0 rgb(2 3 3 / 48%);
   border-radius: 10px;
+}
+
+.cropper {
+  height: 600px;
+  width: 100%;
 }
 
 .modal-banner {

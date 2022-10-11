@@ -26,9 +26,27 @@ type AppProps = {
   fieldId: string;
 };
 
+const stencilRatio = 30 / 45;
+
 const resetFileInput = (inputField: HTMLInputElement): void => {
   inputField.value = "";
   inputField.files = null;
+};
+
+const defaultSize: DefaultSize = ({ imageSize, visibleArea }) => {
+  return {
+    width: (visibleArea || imageSize).width,
+    height: (visibleArea || imageSize).height,
+  };
+};
+
+const stencilSize: StencilSize = ({ boundary }) => {
+  const largestBoundarySize = Math.min(boundary.width, boundary.height);
+
+  return {
+    width: largestBoundarySize * stencilRatio - 48,
+    height: largestBoundarySize - 120,
+  };
 };
 
 const customStyles: Styles = {
@@ -125,28 +143,10 @@ function App(props: AppProps) {
     }
   };
 
-  const defaultSize: DefaultSize = ({ imageSize, visibleArea }) => {
-    return {
-      width: (visibleArea || imageSize).width,
-      height: (visibleArea || imageSize).height,
-    };
-  };
-
-  const ratio = 30 / 45;
-
-  const stencilSize: StencilSize = ({ boundary, imageSize }) => {
-    const largestBoundarySize = Math.min(boundary.width, boundary.height);
-
-    return {
-      width: largestBoundarySize * ratio - 48,
-      height: largestBoundarySize - 120,
-    };
-  };
-
   return (
     <Modal
       isOpen={isModalOpen}
-      contentLabel="Example Modal"
+      contentLabel="Photo Validation Modal"
       onRequestClose={() => setModalOpen(false)}
       ariaHideApp={false}
       style={customStyles}
@@ -156,25 +156,25 @@ function App(props: AppProps) {
         {!isHelpOpen ? (
           <>
             <FixedCropper
+              className="cropper"
+              src={fileUrl.current}
               wrapperComponent={CropperWrapper}
               wrapperProps={{
                 validating: isValidating,
                 onHelp: () => setHelpOpen(true),
               }}
+              stencilSize={stencilSize}
               defaultSize={defaultSize}
               onReady={(ref) => {
                 cropperRef.current = ref;
               }}
-              src={fileUrl.current}
               minWidth={100}
               minHeight={150}
-              className={"cropperTest"}
-              stencilSize={stencilSize}
               stencilProps={{
-                ratio,
-                handlers: false,
+                ratio: stencilRatio,
                 lines: false,
                 movable: false,
+                handlers: false,
                 resizable: false,
               }}
               imageRestriction={ImageRestriction.stencil}
