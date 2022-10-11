@@ -132,6 +132,7 @@ const App = (props: AppProps) => {
       return;
     }
 
+    setModalOpen(false);
     // replace the existing file with a new one that has the cropped content in it
     const field = document.getElementById(props.fieldId) as HTMLInputElement;
     const oldFile = field.files?.item(0);
@@ -142,9 +143,7 @@ const App = (props: AppProps) => {
     dataTransfer.items.add(newFile);
     field.files = dataTransfer.files;
 
-    alert("This image is a valid photo.");
     cleanupFileUrl(fileUrl);
-    setModalOpen(false);
   }, [props.fieldId, fileUrl.current, cropperRef.current]);
 
   const onModalCancel = () => {
