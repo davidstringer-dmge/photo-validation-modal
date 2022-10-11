@@ -1,8 +1,9 @@
 import { MouseEventHandler } from "react";
-import classes from "./HelpSection.module.css";
 
 import closeUrl from "../assets/cancel.svg";
 import guidelineUrl from "../assets/guideline.png";
+
+import s from "./HelpSection.module.css";
 
 type HelpSectionProps = {
   onClose?: MouseEventHandler;
@@ -10,9 +11,9 @@ type HelpSectionProps = {
 
 export const HelpSection = (props: HelpSectionProps) => {
   return (
-    <div className={classes.container}>
-      <div>
-        <button className={classes.closeButton} onClick={props.onClose}>
+    <div className={s.container}>
+      <div className={s.guidelines}>
+        <button className={s.closeButton} onClick={props.onClose}>
           <img src={closeUrl} />
         </button>
         <h1>Photo Guidelines</h1>
@@ -42,12 +43,10 @@ export const HelpSection = (props: HelpSectionProps) => {
           <li>Not have any 'red eye'</li>
           <li>Not have any shadows on your face or behind you</li>
         </ul>
+      </div>
+      <div className={s.example}>
         <h2>Example</h2>
-        <img
-          className={classes.imageExample}
-          src={guidelineUrl}
-          width="200px"
-        />
+        <img className={s.exampleImage} src={guidelineUrl} width="200px" />
       </div>
     </div>
   );
