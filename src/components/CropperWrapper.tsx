@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { CropperFade, CropperRef } from "react-advanced-cropper";
 import {
   getZoomFactor,
