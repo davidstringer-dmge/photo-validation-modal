@@ -1,7 +1,7 @@
 .container {
   color: white;
   padding: 20px;
-  height: 460px;
+  height: var(--modal-content-height);
   overflow-y: scroll;
   background-color: black;
   box-sizing: border-box;
@@ -54,16 +54,4 @@
   background-repeat: no-repeat;
   background-attachment: local, local, scroll, scroll;
   background-size: 100% 45px, 100% 45px, 100% 15px, 100% 15px;
-}
-
-@media screen and (min-width: 576px) {
-  .container {
-    height: 500px;
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .container {
-    height: 600px;
-  }
 }

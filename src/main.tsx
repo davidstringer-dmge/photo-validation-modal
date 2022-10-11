@@ -7,6 +7,8 @@ import "@fontsource/lato";
 
 import App from "./App";
 
+import "./variables.css";
+
 const baseId = "dmg-photo-validation";
 const reactRootId = `${baseId}-root`;
 
