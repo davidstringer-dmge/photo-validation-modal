@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
 import {
   CropperRef,
   FixedCropper,
@@ -51,6 +58,12 @@ const stencilSize: StencilSize = ({ boundary }) => {
   };
 };
 
+const cleanupFile = (fileUrlRef: MutableRefObject<string | undefined>) => {
+  if (fileUrlRef.current) {
+    URL.revokeObjectURL(fileUrlRef.current);
+  }
+};
+
 const customStyles: Styles = {
   overlay: {
     fontFamily: '"Lato", Arial, sans-serif',
@@ -97,14 +110,6 @@ const App = (props: AppProps) => {
     };
 
     field?.addEventListener("change", onChange);
-
-    return () => {
-      // console.log("unmounted");
-      // field?.removeEventListener("change", onChange);
-      // if (fileUrl.current) {
-      //   URL.revokeObjectURL(fileUrl.current);
-      // }
-    };
   }, [props.fieldId]);
 
   const onConfirm = useCallback(async () => {
@@ -140,14 +145,25 @@ const App = (props: AppProps) => {
     dataTransfer.items.add(newFile);
     field.files = dataTransfer.files;
 
+    cleanupFile(fileUrl);
     setModalOpen(false);
-  }, [cropperRef.current, pickedUpFile.current, props.fieldId]);
+  }, [
+    props.fieldId,
+    fileUrl.current,
+    cropperRef.current,
+    pickedUpFile.current,
+  ]);
+
+  const onModalClose = () => {
+    cleanupFile(fileUrl);
+    setModalOpen(false);
+  };
 
   return (
     <Modal
       isOpen={isModalOpen}
       contentLabel="Photo Validation Modal"
-      onRequestClose={() => setModalOpen(false)}
+      onRequestClose={onModalClose}
       ariaHideApp={false}
       style={customStyles}
     >
@@ -183,7 +199,7 @@ const App = (props: AppProps) => {
               <IconButton
                 zoomOnHover={true}
                 iconUrl={cancelUrl}
-                onClick={() => setModalOpen(false)}
+                onClick={onModalClose}
               />
               <IconButton
                 zoomOnHover={true}
