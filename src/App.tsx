@@ -20,7 +20,7 @@ import checkUrl from "./assets/check.svg";
 
 import { validatePhoto } from "./services/photoValidation";
 
-import { Banner } from "./components/Banner";
+import { Banner, BannerMessage } from "./components/Banner";
 import { IconButton } from "./components/IconButton";
 import { HelpSection } from "./components/HelpSection";
 import { CropperWrapper } from "./components/CropperWrapper";
@@ -62,6 +62,14 @@ const cleanupFileUrl = (fileUrlRef: MutableRefObject<string | undefined>) => {
   if (fileUrlRef.current) {
     URL.revokeObjectURL(fileUrlRef.current);
   }
+};
+
+const getBannerMessage = (isValidating: boolean): BannerMessage => {
+  if (isValidating) {
+    return BannerMessage.VALIDATING;
+  }
+
+  return BannerMessage.GENERAL;
 };
 
 const modalCustomStyles: Styles = {
@@ -162,7 +170,7 @@ const App = (props: AppProps) => {
       ariaHideApp={false}
       style={modalCustomStyles}
     >
-      <Banner className={s.banner} />
+      <Banner className={s.banner} message={getBannerMessage(isValidating)} />
       <div className={s.cropperWrapper}>
         {!isHelpOpen ? (
           <>
@@ -193,11 +201,13 @@ const App = (props: AppProps) => {
             <div className={s.submissions}>
               <IconButton
                 zoomOnHover={true}
+                disabled={isValidating}
                 iconUrl={cancelUrl}
                 onClick={onModalCancel}
               />
               <IconButton
                 zoomOnHover={true}
+                disabled={isValidating}
                 iconUrl={checkUrl}
                 onClick={onConfirm}
               />

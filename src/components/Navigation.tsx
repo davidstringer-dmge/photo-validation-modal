@@ -11,12 +11,14 @@ import s from "./Navigation.module.css";
 type NavigationProps = {
   zoomValue: number;
   className?: string;
+  disabled?: boolean;
   onZoom?: (zoomValue: number, transition?: boolean) => void;
 };
 
 export const Navigation = ({
   zoomValue,
   className,
+  disabled,
   onZoom,
 }: NavigationProps) => {
   const onZoomIn = () => {
@@ -35,9 +37,11 @@ export const Navigation = ({
         className={s.zoomButton}
         iconUrl={zoomOutUrl}
         onClick={onZoom && onZoomOut}
+        disabled={disabled}
         zoomOnHover={true}
       />
       <input
+        disabled={disabled}
         className={s.slider}
         type="range"
         min="0"
@@ -52,6 +56,7 @@ export const Navigation = ({
         className={s.zoomButton}
         iconUrl={zoomInUrl}
         onClick={onZoom && onZoomIn}
+        disabled={disabled}
         zoomOnHover={true}
       />
     </div>

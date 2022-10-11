@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { CropperFade, CropperRef } from "react-advanced-cropper";
 import {
   getZoomFactor,
@@ -12,7 +13,6 @@ import { Navigation } from "./Navigation";
 import { IconButton } from "./IconButton";
 
 import s from "./CropperWrapper.module.css";
-import { ReactNode } from "react";
 
 export interface CropperWrapperProps {
   // supplied by advanced-cropper
@@ -58,11 +58,13 @@ export const CropperWrapper = ({
         <IconButton
           iconUrl={helpUrl}
           onClick={onHelp}
+          disabled={showSpinner}
           className={s.helpButton}
         />
         <Navigation
           className={s.navigation}
           zoomValue={absoluteZoom}
+          disabled={showSpinner}
           onZoom={onZoom}
         />
       </CropperFade>

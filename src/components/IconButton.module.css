@@ -2,7 +2,6 @@
   display: flex;
   cursor: pointer;
   padding: 0;
-  opacity: 0.4;
   align-items: center;
   justify-content: center;
   border: none;
@@ -12,11 +11,10 @@
   transition: 0.5s;
 }
 
-.iconButton:hover,
-.iconButton:focus {
-  opacity: 1;
-}
-
 .zoomOnHover:hover {
   transform: scale(1.1);
+}
+
+.disabled {
+  opacity: 0.4;
 }
