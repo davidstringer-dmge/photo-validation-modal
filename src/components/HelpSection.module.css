@@ -1,7 +1,7 @@
 .container {
   color: white;
   padding: 20px;
-  height: var(--modal-content-height);
+  height: calc(var(--modal-content-height) + var(--modal-banner-height));
   overflow-y: scroll;
   background-color: black;
   box-sizing: border-box;
