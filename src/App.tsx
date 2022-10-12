@@ -214,7 +214,7 @@ const App = (props: AppProps) => {
               }}
               stencilSize={stencilSize}
               defaultSize={defaultSize}
-              onInteractionStart={() => {
+              onTransformImage={() => {
                 setErrorCodes([]);
               }}
               onReady={(ref) => {
