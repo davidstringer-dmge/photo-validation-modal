@@ -209,6 +209,9 @@ const App = (props: AppProps) => {
                 validating: isValidating,
                 onHelp: () => setHelpOpen(true),
               }}
+              backgroundWrapperProps={{
+                moveImage: !isValidating,
+              }}
               stencilSize={stencilSize}
               defaultSize={defaultSize}
               onInteractionStart={() => {
