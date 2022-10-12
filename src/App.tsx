@@ -211,6 +211,9 @@ const App = (props: AppProps) => {
               }}
               stencilSize={stencilSize}
               defaultSize={defaultSize}
+              onInteractionStart={() => {
+                setErrorCodes([]);
+              }}
               onReady={(ref) => {
                 cropperRef.current = ref;
               }}
