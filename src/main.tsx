@@ -20,7 +20,8 @@ export const validatePhotoFields = ({ fieldIds }: ListenForValidationArgs) => {
   for (const fieldId of fieldIds) {
     const field = document.getElementById(fieldId);
     if (field?.tagName !== "INPUT" || field.getAttribute("type") !== "file") {
-      throw new Error(`Given field id is not a file input type: ${fieldId}.`);
+      console.error(`Given field id is not a file input type: ${fieldId}.`);
+      return;
     }
   }
 
