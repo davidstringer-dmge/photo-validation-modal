@@ -20,7 +20,7 @@ import checkUrl from "./assets/check.svg";
 
 import { validatePhoto } from "./services/photoValidation";
 
-import { Banner, BannerMessage } from "./components/Banner";
+import { Banner, BannerType, BANNER_MESSAGES } from "./components/Banner";
 import { IconButton } from "./components/IconButton";
 import { HelpSection } from "./components/HelpSection";
 import { CropperWrapper } from "./components/CropperWrapper";
@@ -64,12 +64,28 @@ const cleanupFileUrl = (fileUrlRef: MutableRefObject<string | undefined>) => {
   }
 };
 
-const getBannerMessage = (isValidating: boolean): BannerMessage => {
+const getBannerProps = (
+  isValidating: boolean,
+  errorCodes: string[]
+): [BannerType, string[]] => {
   if (isValidating) {
-    return BannerMessage.VALIDATING;
+    return [BannerType.INFO, [BANNER_MESSAGES.VALIDATING]];
   }
 
-  return BannerMessage.GENERAL;
+  if (errorCodes.length) {
+    const errorCodesWithBannerMessages = errorCodes
+      .map((errorCode) => BANNER_MESSAGES[errorCode])
+      .filter(Boolean);
+
+    return [
+      BannerType.WARNING,
+      errorCodesWithBannerMessages.length
+        ? errorCodesWithBannerMessages
+        : [BANNER_MESSAGES.GENERAL_ERROR],
+    ];
+  }
+
+  return [BannerType.INFO, [BANNER_MESSAGES.GENERAL]];
 };
 
 const modalCustomStyles: Styles = {
@@ -97,8 +113,11 @@ const App = (props: AppProps) => {
   const fieldRef = useRef<HTMLInputElement>();
   const cropperRef = useRef<CropperRef | null>(null);
   const [isHelpOpen, setHelpOpen] = useState(false);
+  const [errorCodes, setErrorCodes] = useState<string[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isValidating, setValidating] = useState(false);
+
+  const [bannerType, bannerMessages] = getBannerProps(isValidating, errorCodes);
 
   useEffect(() => {
     const onChange = (event: Event) => {
@@ -124,6 +143,7 @@ const App = (props: AppProps) => {
       return;
     }
 
+    setErrorCodes([]);
     setValidating(true);
     const blob = await new Promise<Blob>((done, reject) => {
       cropperRef.current?.getCanvas()?.toBlob((blob) => {
@@ -139,7 +159,7 @@ const App = (props: AppProps) => {
     setValidating(false);
 
     if (!response.ok) {
-      alert(`${body.message}: ${body.errorCodes!.join(", ")}`);
+      setErrorCodes(body.errorCodes ?? []);
       return;
     }
 
@@ -159,6 +179,8 @@ const App = (props: AppProps) => {
   const onModalCancel = () => {
     cleanupFileUrl(fileUrl);
     setModalOpen(false);
+    setErrorCodes([]);
+    setValidating(false);
     resetFileInput(fieldRef);
   };
 
@@ -170,7 +192,11 @@ const App = (props: AppProps) => {
       ariaHideApp={false}
       style={modalCustomStyles}
     >
-      <Banner className={s.banner} message={getBannerMessage(isValidating)} />
+      <Banner
+        type={bannerType}
+        className={s.banner}
+        messages={bannerMessages}
+      />
       <div className={s.cropperWrapper}>
         {!isHelpOpen ? (
           <>
@@ -195,6 +221,7 @@ const App = (props: AppProps) => {
                 movable: false,
                 handlers: false,
                 resizable: false,
+                lineWrapperClassNames: "WHAT",
               }}
               imageRestriction={ImageRestriction.stencil}
             />

@@ -1,13 +1,17 @@
-.container {
+.banner {
   display: flex;
   align-items: center;
   color: black;
   background-color: white;
   border-radius: 2px;
   box-shadow: 0 0 18px 0 rgb(2 3 3 / 48%);
-  height: var(--modal-banner-height);
+  min-height: var(--modal-banner-height);
   padding: 10px 15px;
   font-size: 14px;
+}
+
+.banner--warning {
+  background-color: #fa9f47;
 }
 
 .icon {
