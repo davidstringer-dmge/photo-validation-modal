@@ -132,7 +132,8 @@ const App = (props: AppProps) => {
       }
     };
 
-    for (const fieldId of props.fieldIds) {
+    const uniqueFields = [...new Set(props.fieldIds)];
+    for (const fieldId of uniqueFields) {
       const field = document.getElementById(fieldId);
       field?.addEventListener("change", onChange);
     }
