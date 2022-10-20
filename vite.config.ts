@@ -13,7 +13,17 @@ export default defineConfig({
       // The proper extensions will be added
       fileName: "photo-validation-modal",
     },
-    rollupOptions: {},
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === "style.css") {
+            return "photo-validation-modal.css";
+          }
+
+          return assetInfo.name;
+        },
+      },
+    },
   },
   define: {
     // React requires this to be replaced to build properly in production

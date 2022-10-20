@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:prod": "tsc && vite build",
+    "build:staging": "tsc && vite build --mode staging",
+    "deploy:staging": "aws s3 sync ./dist/ s3://photo-validation-service-assets-staging/assets",
+    "deploy:prod": "aws s3 sync ./dist/ s3://photo-validation-service-assets-prod/assets"
   },
   "dependencies": {
     "@fontsource/lato": "^4.5.10",
