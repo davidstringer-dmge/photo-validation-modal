@@ -29,6 +29,7 @@ The frontend for the photo validation project.
 
 ### Requirements
 
+- aws-cli: `^2.7.29`
 - node: `^v14.0.0`
 - npm: `^8.18.0`
 
@@ -41,13 +42,25 @@ npm run dev
 
 This will run a local page running in `http://localhost:5173`, demoing the library.
 
-### Local Photo Validation Service
-
-When running in development and you want to point a local photo validation service (e.g. `http://localhost:3000`):
+Note that this is pointing at a local version of the photo validation service. To override this, use `.env.local` to point it to your own service:
 
 ```sh
 touch .env.local
 echo "VITE_PHOTO_VALIDATION_BASE_URL=http://localhost:3000" >> .env.local
 ```
 
-This will override the staging environment.
+See [Vite Environment Variables](https://vitejs.dev/guide/env-and-mode.html) for more info.
+
+## Deployment
+
+Make sure that you have the appropriate [AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) stored on your system. The AWS resources are stored under the AWS account `255690681915`. Please use an appropriate IAM user and/or role to allow the deploy to happen.
+
+```sh
+# For staging
+npm run build:staging
+npm run deploy:staging
+
+# For production
+npm run build:prod
+npm run deploy:prod
+```
