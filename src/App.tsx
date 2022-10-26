@@ -160,7 +160,7 @@ const App = (props: AppProps) => {
     setValidating(false);
 
     if (!response.ok) {
-      setErrorCodes(body.errorCodes ?? []);
+      setErrorCodes(body.errorCodes ?? [BANNER_MESSAGES.UNKNOWN_ERROR]);
       return;
     }
 
