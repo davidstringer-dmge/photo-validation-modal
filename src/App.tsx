@@ -147,20 +147,31 @@ const App = (props: AppProps) => {
     setErrorCodes([]);
     setValidating(true);
     const blob = await new Promise<Blob>((done, reject) => {
-      cropperRef.current?.getCanvas()?.toBlob((blob) => {
-        if (blob) {
-          done(blob);
-        } else {
-          reject(new Error("Could not save the cropped image"));
-        }
-      });
+      cropperRef.current?.getCanvas()?.toBlob(
+        (blob) => {
+          if (blob) {
+            done(blob);
+          } else {
+            reject(new Error("Could not save the cropped image"));
+          }
+        },
+        "image/jpeg",
+        0.8
+      );
     });
 
     const { response, body } = await validatePhoto(blob);
     setValidating(false);
 
     if (!response.ok) {
-      setErrorCodes(body.errorCodes ?? [BANNER_MESSAGES.UNKNOWN_ERROR]);
+      if (body.errorCodes) {
+        setErrorCodes(body.errorCodes);
+      } else if (response.status === 413) {
+        setErrorCodes(["IMAGE_SIZE_TOO_HIGH"]);
+      } else {
+        setErrorCodes(["UNKNOWN_ERROR"]);
+      }
+
       return;
     }
 
