@@ -19,7 +19,7 @@ env:
 jobs:
   deploy_staging:
     name: Deploy Staging
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     environment:
       name: staging
     steps:
@@ -38,7 +38,7 @@ jobs:
   deploy_production:
     name: Deploy Production
     needs: [deploy_staging]
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     environment:
       name: production
     steps:
