@@ -44,6 +44,7 @@ export const Banner = ({
 }: BannerProps) => {
   return (
     <div
+      data-testid="banner"
       className={classNames(
         className,
         classes.banner,

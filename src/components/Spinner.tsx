@@ -1,10 +1,12 @@
 interface SpinnerProps {
   className?: string;
+  testId?: string;
 }
 
-export const Spinner = ({ className }: SpinnerProps) => {
+export const Spinner = ({ className, testId }: SpinnerProps) => {
   return (
     <svg
+      data-testid={testId}
       className={className}
       width="38"
       height="38"

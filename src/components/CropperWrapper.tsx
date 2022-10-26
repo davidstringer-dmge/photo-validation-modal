@@ -69,6 +69,7 @@ export const CropperWrapper = ({
         />
       </CropperFade>
       <Spinner
+        testId="cropper-loading"
         className={classNames(s.spinner, {
           [s["spinner--hide"]]: !showSpinner,
         })}
