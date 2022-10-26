@@ -1,5 +1,6 @@
 {
   "name": "photo-validation-modal",
+  "description": "The frontend modal for validating photos in a form",
   "private": true,
   "version": "0.0.0",
   "type": "module",
