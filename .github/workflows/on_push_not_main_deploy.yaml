@@ -1,0 +1,31 @@
+name: Test Feature
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
+
+jobs:
+  feature_deploy:
+    name: Deploy Feature
+    concurrency:
+      group: ${{ github.ref }}/${{ github.head_ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          cache: "npm"
+      - name: Install
+        run: npm ci && npm run build:staging
+      - name: Test Feature
+        run: npx serve ./dist --cors & npm test
