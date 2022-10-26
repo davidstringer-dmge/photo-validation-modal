@@ -15,7 +15,9 @@ export const BANNER_MESSAGES: { [bannerMessageType: string]: string } = {
     "The photo is invalid. Press the help button below for guidelines.",
   UNKNOWN_ERROR:
     "Something went wrong on our side. Please try again at a later date",
-  // specific error codes
+  IMAGE_SIZE_TOO_HIGH:
+    "Cropped image size is too high. Please try choosing a smaller image, according to guidelines.",
+  // face specific error codes
   EYES_NOT_OPEN: "Eyes are not open.",
   FACE_NOT_CENTERED: "Face is not centered.",
   CHIN_TOO_FAR: "Chin is too close to the center.",
