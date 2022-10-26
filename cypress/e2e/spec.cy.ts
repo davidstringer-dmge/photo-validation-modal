@@ -6,7 +6,11 @@ describe("Photo Validation Modal Functionality", () => {
     cy.findByTestId("file-upload").selectFile(
       `./cypress/fixtures/${imageFilename}`
     );
+    cy.findByTestId("banner").should("be.visible");
+    cy.findByTestId("zoom-navigation").should("be.visible");
     cy.findByTestId("confirm-cta").click();
+    cy.findByTestId("banner").should("not.exist");
+    cy.findByTestId("zoom-navigation").should("not.exist");
     cy.findByTestId("file-upload").should("contain.value", imageFilename);
   });
 });

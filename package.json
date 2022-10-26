@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "cypress run --browser electron",
     "preview": "vite preview",
     "build:prod": "tsc && vite build",
     "build:staging": "tsc && vite build --mode staging",

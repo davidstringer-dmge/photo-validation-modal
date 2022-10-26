@@ -32,7 +32,10 @@ export const Navigation = ({
   };
 
   return (
-    <div className={classNames(className, s.navigation)}>
+    <div
+      className={classNames(className, s.navigation)}
+      data-testid="zoom-navigation"
+    >
       <IconButton
         className={s.zoomButton}
         iconUrl={zoomOutUrl}
