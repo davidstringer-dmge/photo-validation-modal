@@ -1,0 +1,53 @@
+name: Deploy main branch
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  deploy_staging:
+    name: Deploy Staging
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: "npm"
+      - name: Install
+        run: npm ci && npm run build:staging
+      - name: Deploy Staging
+        run: npm run deploy:staging
+
+  deploy_production:
+    name: Deploy Production
+    needs: [deploy_staging]
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: "npm"
+      - name: Install
+        run: npm ci && npm run build:prod
+      - name: Deploy Staging
+        run: npm run deploy:prod

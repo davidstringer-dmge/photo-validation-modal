@@ -6,7 +6,7 @@ interface ValidatePhotoResult {
   };
 }
 
-const BASE_URL = import.meta.env.VITE_PHOTO_VALIDATION_BASE_URL;
+export const BASE_URL = import.meta.env.VITE_PHOTO_VALIDATION_BASE_URL;
 
 export const validatePhoto = async (
   blob: Blob

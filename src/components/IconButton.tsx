@@ -4,6 +4,7 @@ import classNames from "classnames";
 import s from "./IconButton.module.css";
 
 interface IconButtonProps {
+  testId?: string;
   iconUrl: string;
   onClick?: MouseEventHandler;
   disabled?: boolean;
@@ -17,9 +18,11 @@ export const IconButton = ({
   disabled,
   onClick,
   iconUrl,
+  testId,
 }: IconButtonProps) => (
   <button
     type="button"
+    data-testid={testId}
     disabled={disabled}
     onClick={(e) => {
       e.currentTarget.blur();

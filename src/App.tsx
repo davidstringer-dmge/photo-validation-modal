@@ -228,7 +228,6 @@ const App = (props: AppProps) => {
                 movable: false,
                 handlers: false,
                 resizable: false,
-                lineWrapperClassNames: "WHAT",
               }}
               imageRestriction={ImageRestriction.stencil}
             />
@@ -238,12 +237,14 @@ const App = (props: AppProps) => {
                 disabled={isValidating}
                 iconUrl={cancelUrl}
                 onClick={onModalCancel}
+                testId="cancel-cta"
               />
               <IconButton
                 zoomOnHover={true}
                 disabled={isValidating}
                 iconUrl={checkUrl}
                 onClick={onConfirm}
+                testId="confirm-cta"
               />
             </div>
           </>
