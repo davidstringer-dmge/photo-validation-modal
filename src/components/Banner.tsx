@@ -13,6 +13,8 @@ export const BANNER_MESSAGES: { [bannerMessageType: string]: string } = {
     "Please adjust your photo to match the requirements closely. Press the help button below for guidelines.",
   GENERAL_ERROR:
     "The photo is invalid. Press the help button below for guidelines.",
+  UNKNOWN_ERROR:
+    "Something went wrong on our side. Please try again at a later date",
   // specific error codes
   EYES_NOT_OPEN: "Eyes are not open.",
   FACE_NOT_CENTERED: "Face is not centered.",

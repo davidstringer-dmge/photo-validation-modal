@@ -3,7 +3,7 @@ describe("Photo Validation Modal Functionality", () => {
     const imageFilename = "valid-person.jpg";
 
     beforeEach(() => {
-      cy.visit("http://localhost:3000");
+      cy.visit("http://localhost:3000/demo.html");
       cy.findByTestId("file-upload").selectFile(
         `./cypress/fixtures/${imageFilename}`
       );
