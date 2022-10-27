@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { MouseEventHandler } from "react";
 
 import closeUrl from "../assets/cancel.svg";
-import guidelineUrl from "../assets/guideline.png";
+import guidelineUrl from "../assets/guideline.jpg";
 
 import s from "./HelpSection.module.css";
 
